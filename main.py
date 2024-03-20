@@ -39,7 +39,7 @@ if __name__ == "__main__":
             sobreescribir = input()
             if sobreescribir.strip() == "S":
                 print("Sobre escribiendo archivo...")
-                with open(nombre_archivo, "a") as file:
+                with open(nombre_archivo, "w") as file:
                     for tarea in task_list:
                         file.write(str(tarea) + "\n")
             else:
@@ -47,10 +47,11 @@ if __name__ == "__main__":
                 with open(nombre_archivo, "a") as file:
                     for tarea in task_list:
                         file.write(str(tarea) + "\n")
+        else:
+            with open(nombre_archivo, "w") as file:
+                for tarea in task_list:
+                    file.write(str(tarea) + "\n")
 
-        with open(nombre_archivo, "w") as file:
-            for tarea in task_list:
-                file.write(str(tarea) + "\n")
 
     else:
         print("Terminando sin guardar...")
