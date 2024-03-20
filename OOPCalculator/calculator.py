@@ -12,30 +12,70 @@ class Calculator(object):
         self.operator = operator
 
         """
-            Las funciones lambda son una "abreviacion" de una funcion que realiza una sola operacion.
+            En python y muchos otros lenguages populares, esta implementado el paradigma de programacion
+            funcional. Lenguajes orientados a este paradigma, tal y como indica su nombre, estan basados
+            en el uso de funciones. Ejemplos de estos lenguajes son: haskell, lisp, y clojure.
             
-            Por ejemplo, la funcion para elevar al cuadrado un numero puede ser:
+            Estos lenguajes utilizan el concepto de "lazy_evaluation" para gran parte de sus funciones, esto
+            fue una de las razones para incluir este paradigma en lenguajes no funcionales como python, java, 
+            c++, etc. Esto esta implementado de diversas formas pero la mas directa son las funciones lambda (
+            en algunos lenguajes tienen distinto nombre, como en JavaScript son arrowfunctions).
             
-            def elevar_cuadrado(num: int) -> int:
-                return num ** 2 # Asi se eleva al cuadrado en python.
+            Este nuevo concepto permitio la reduccion de redundancia y aumento la legibilidad en codigo al reducir
+            el espacio y repeticion del uso de funciones que realizan tareas simples y comunmente se repetian mucho.
+            Y una de las ventajas de esto, tanto en python como en otros lenguajes es la introduccion de un tipo
+            de dato para representar funciones. En python y creo en java existe el tipo de dato llamado "Callable"
+            que representa una funcion.
+            
+            Por ejemplo:
+            
+            foo: Callable
+            
+            dice que la variable foo es de tipo Callable, esto hace posible asignar una funcion a dicha variable:
+            
+            def suma(x: int, y: int) -> int:
+                return x + y
                 
-            Pero dicha funcion realiza una sola operacion, por tanto una lamda se puede usar en su lugar:
+            foo = suma
             
-            elevar_cuadrado = lambda num: num ** 2
+            sirviendo algo asi como un alias de la funcion en este caso, por tanto la funcion suma ahora puede
+            ser llamada como foo():
             
-            Y realizan lo mismo, ambas definiciones pueden llamarse como una funcion normal y devuelven el mismo tipo de dato:
+            resultado = suma(x, y),
             
-            elevar_cuadrado(num),
+            es lo mismo que:
             
-            En este ejemplo, el diccionario "operations", contiene las operaciones posibles como lalve, y como valor
-            una funcion lambda con la operacion correspondiebte, sobre los valores / atributos de la clase (operandos)
+            resultado = foo(x, y)
+            
+            Ahora, con el uso de lambdas, esto tiene "mas sentido", al realizar definiciones de funciones "inline":
+            
+            suma = lambda x, y: x + y
+            
+            hace que "suma" sea una funcion que suma los dos valores que se le pasan por parametro, tal y como la 
+            definicion de arriba:
+            
+            resultado = suma(x, y)
+            
+            Tarea adicional: reemplaza las funciones de esta clase, por funciones lambda*.    
         """
         self.operations = {
-            "+": lambda: self.left_op + self.right_op,
-            "-": lambda: self.left_op - self.right_op,
-            "*": lambda: self.left_op * self.right_op,
-            "/": lambda: self.left_op / self.right_op
+            "+": self.add,
+            "-": self.substract,
+            "*": self.multiplication,
+            "/": self.division
         }
+
+    def add(self):
+        return self.left_op + self.right_op
+
+    def substract(self):
+        return self.left_op - self.right_op
+
+    def multiplication(self):
+        return self.left_op * self.right_op
+
+    def division(self):
+        return self.left_op / self.right_op
 
     def calculate(self):
         return self.operations[self.operator]()
